@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.0;
 
-/** 
- * @title ERC-20
- * @dev Implements the EIP-20 Standard
+/**@title DiamunToken ERC20 Excercise
+ * @author Daniel Osariemen Osazee
+ * @dev This contract implements the EIP-20 standard 
  */
 
 
