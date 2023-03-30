@@ -74,6 +74,52 @@ contract ERC20 {
         balances[recipient] = totalSupply / 2;
 
     }
+
+     /** 
+    * @dev -------- Main Functions --------
+    */
+
+    /** 
+    * @dev Approve token value for spending
+    */
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        allowances[msg.sender][_spender] = _value;
+
+        emit Approval(msg.sender, _spender, _value);
+        success = true;
+    }
+
+    /** 
+    * @dev Transfer function: enables transfer of token
+    */
+    function transfer(address _to, uint256 _value) public returns (bool success) {
+        require(balances[msg.sender] >= _value, "No enough token");
+        success = true;
+
+        balances[msg.sender] -= _value;
+        balances[_to] += _value;
+
+        emit Transfer(msg.sender, _to, _value);        
+    }
+
+    /** 
+    * @dev Transfer From function: allows transfer on behalf of another
+    */
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
+        require(allowances[_from][msg.sender] >= _value, "Not Enough Allowance");
+        require(balances[_from] >= _value, "No enough token");
+        success = true;
+       
+        // reduce allowance
+        allowances[_from][msg.sender] -= _value;
+
+        balances[_from] -= _value;
+        balances[_to] += _value;
+
+        emit Transfer(_from, _to, _value);
+    }
+
+
     
 
 
