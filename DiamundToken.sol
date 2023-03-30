@@ -84,8 +84,9 @@ contract ERC20 {
     */
     function approve(address _spender, uint256 _value) public returns (bool success) {
         require(_spender != address(0), "Invalid address");
-        allowances[msg.sender][_spender] = _value;
         success = true;
+       
+        allowances[msg.sender][_spender] = _value;
 
         emit Approval(msg.sender, _spender, _value);
     }
