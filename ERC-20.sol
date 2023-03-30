@@ -120,6 +120,37 @@ contract ERC20 {
     }
 
 
+    /** 
+    * @dev ---- Getter Functions ------
+    */
+
+    /** 
+    * @dev Balance Of
+    */
+    function balanceOf(address _owner) public view returns (uint256 balance){
+        balance = balances[_owner];
+    }
+
+    /** 
+    * @dev get deployer balance
+    */
+    function getDeployerBalance () public view returns(uint256 balance) {
+        return balances[deployer];
+    }
+
+    /** 
+    * @dev get recipient balance
+    */
+    function getRecipientBalance () public view returns(uint256 balance) {
+        return balances[recipient];
+    }
+
+    /** 
+    * @dev get allowance
+    */
+    function allowance(address _owner, address _spender) public view returns (uint256) {
+        return allowances[_owner][_spender];
+    }
     
 
 
