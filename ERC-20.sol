@@ -51,13 +51,29 @@ contract ERC20 {
     address public immutable deployer;
 
 
-
     /** 
     * @dev Mappings
     */
     mapping(address => uint256) balances;
     mapping(address => mapping(address => uint256)) allowances;
 
+    /** 
+    * @dev Constructor
+    */
+    constructor (address _recipient) {
+        name = "Diamund Token";
+        symbol = "DMDT";
+        decimals = 18;
+        deployer = msg.sender;
+        recipient = _recipient;
+        
+        // Give the owner 50% the totalsupply 
+        balances[deployer] = totalSupply / 2;
+
+        // Give the recipient 50% the totalsupply
+        balances[recipient] = totalSupply / 2;
+
+    }
     
 
 
