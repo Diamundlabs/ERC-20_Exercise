@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-/**@title DiamunToken ERC20 Excercise
+/**@title DiamundToken ERC20 Excercise
  * @author Daniel Osariemen Osazee
  * @dev This contract implements the EIP-20 standard 
  */
@@ -84,9 +84,9 @@ contract ERC20 {
     */
     function approve(address _spender, uint256 _value) public returns (bool success) {
         allowances[msg.sender][_spender] = _value;
+        success = true;
 
         emit Approval(msg.sender, _spender, _value);
-        success = true;
     }
 
     /** 
