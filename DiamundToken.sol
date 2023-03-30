@@ -83,6 +83,7 @@ contract ERC20 {
     * @dev Approve token value for spending
     */
     function approve(address _spender, uint256 _value) public returns (bool success) {
+        require(_spender != address(0), "Invalid address");
         allowances[msg.sender][_spender] = _value;
         success = true;
 
@@ -94,6 +95,7 @@ contract ERC20 {
     */
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require(balances[msg.sender] >= _value, "No enough token");
+        require(_to != address(0), "Invalid address");
         success = true;
 
         balances[msg.sender] -= _value;
@@ -108,6 +110,7 @@ contract ERC20 {
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
         require(allowances[_from][msg.sender] >= _value, "Not Enough Allowance");
         require(balances[_from] >= _value, "No enough token");
+        require(_to != address(0), "Invalid address");
         success = true;
        
         // reduce allowance
