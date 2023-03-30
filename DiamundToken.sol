@@ -90,6 +90,7 @@ contract ERC20 {
 
         emit Approval(msg.sender, _spender, _value);
     }
+    
 
     /** 
     * @dev Transfer function: enables transfer of token
