@@ -22,4 +22,43 @@ contract ERC20 {
     //      *   Transfer(from, to, value)
     //      *   Approval(owner, spender, value)
 
+
+    /** 
+    * @dev Events
+    */
+    event Transfer(
+        address from, 
+        address to, 
+        uint256 value
+        );
+
+    event Approval(
+        address owner, 
+        address spender, 
+        uint256 value
+        );
+
+    
+
+    /** 
+    * @dev Variable Declaration
+    */
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint256 public totalSupply = 1000000000 ether;
+    address public immutable recipient;
+    address public immutable deployer;
+
+
+
+    /** 
+    * @dev Mappings
+    */
+    mapping(address => uint256) balances;
+    mapping(address => mapping(address => uint256)) allowances;
+
+    
+
+
 }
