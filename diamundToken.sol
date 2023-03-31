@@ -8,8 +8,7 @@ pragma solidity ^0.8.0;
  */
 
 
-contract ERC20 {
-    //    EIP-20 Standard has the following functions and events
+contract DiamundToken {
     //     FUNCTIONS
     //      *   totalSupply()
     //      *   balanceOf(account)
