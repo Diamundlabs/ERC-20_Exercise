@@ -113,6 +113,8 @@ contract DiamondToken is IERC20 {
         address _recipient,
         uint _amount
     ) external returns (bool) {
+        // Make sure user's transfer's are less than or equal to the amount allowed by them
+        allowance[_sender][msg.sender] -= _amount;
 
         // Make sure user's are unable to send transactions to themselves
 
