@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import "./IERC20.sol";
 
-contract ERC20 is IERC20 {
+contract DiamundToken is IERC20 {
 
     // Stores balances {address => uint}
     mapping(address => uint) public balanceOf;
