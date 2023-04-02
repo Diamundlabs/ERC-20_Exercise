@@ -1,0 +1,158 @@
+// contract/diamundToken.sol
+// SPDX-License-Identifier: MIT
+
+
+
+pragma solidity ^0.8.0;
+
+error DiamundToken__Owner();
+error DiamundToken__NotEnoughFunds();
+error DiamundToken__NoFunds();
+error DiamundToken__AlreadyDeployer();
+
+/**@title ERC20 Token Task
+ * @author Ibadin Meshach
+ * @dev This contract is an ERC20 Token standard smart contract from scratch
+ * @notice This contract shows how to create an ERC20 token smart contract with out libraries and some additional features
+ * 
+ */
+
+
+contract DiamundToken {
+
+     /**
+     * @dev State variables
+     */
+
+    string public name;
+    string public symbol;
+    uint8 public immutable decimal = 18;
+    uint256 public immutable totalSupply  = 1000000000000000000000000000;
+    mapping(address => uint256) _balances;
+    address public immutable deployer;
+    address public immutable recipient;
+
+
+     /**
+     * @dev mappings
+     */
+
+
+    // spender => (owner => number of tokens allowed)
+    mapping(address => mapping(address => uint256)) _allowances;
+
+
+
+     /**
+     * @dev events
+     */
+
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+
+    
+    constructor(address _recipient) {
+        name = "Diamund Token";
+        symbol = "DMDT";
+        _balances[msg.sender]  = totalSupply;
+        deployer = msg.sender;
+        recipient = _recipient;
+        transferToRecipient(recipient);
+    }
+
+
+
+
+
+
+     /**
+     * @dev Functions
+     */
+
+
+
+    function transferToRecipient(address _to) public returns (bool){
+          
+        if(msg.sender == _to){
+            revert DiamundToken__AlreadyDeployer();  
+        }
+        
+        uint256 _value = (50 * (totalSupply))/100;
+        _balances[msg.sender] -= _value ;
+        _balances[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function transfer(address _to, uint256 _value) public returns (bool){
+        if(_balances[msg.sender] < _value ){
+            revert DiamundToken__NotEnoughFunds();  
+        }
+        if(_balances[msg.sender] < 0){
+            revert DiamundToken__NoFunds();
+        }
+        _balances[msg.sender] -= _value;
+        _balances[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool){
+        if(_allowances[msg.sender][_from] < _value ){
+            revert DiamundToken__NotEnoughFunds();  
+        }
+        
+        if(_balances[msg.sender] < 0){
+            revert DiamundToken__NoFunds();
+        }
+        _balances[_from] -= _value;
+        _balances[_to] += _value;
+        _allowances[msg.sender][_from] -= _value;
+        emit Transfer(_from, _to, _value);
+        return true;
+    }
+    
+    function approve(address _spender,  uint256 _value) public returns (bool){
+       
+        if(_balances[msg.sender] < _value ){
+            revert DiamundToken__NotEnoughFunds();  
+        }
+
+        _allowances[_spender][msg.sender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+
+
+
+
+
+
+    /**
+     * @dev Getter Functions
+     */
+
+
+    function allowance(address _owner, address _spender) public view returns (uint256){
+     
+        return _allowances[_spender][_owner];
+    }
+
+    function balanceOf(address _owner) public view returns (uint256){
+        if(_owner == address(0)){
+            revert DiamundToken__Owner();
+        }
+        return _balances[_owner];
+    }
+    
+     function deployerBalance() public view returns (uint256){
+        return _balances[deployer];
+    }
+
+      function recipientBalance() public view returns (uint256){
+        return _balances[recipient];
+    }
+
+}
